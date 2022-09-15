@@ -1,0 +1,29 @@
+{
+  "application_name": "marketplace-msteams-poc-proxy",
+  "aws": {
+    "region": "eu-central-1",
+    "availability_zones": ["eu-central-1a", "eu-central-1b", "eu-central-1c"],
+    "vpc_prefix": "marketplace-msteams-poc",
+    "db_name": "marketplace-msteams-poc"
+  },
+  "terragrunt": {
+    "version": "0.37.1"
+  },
+  "terraform": {
+    "version": "1.1.9"
+  },
+  "owner": "BSS",
+  "contact": "bss@xing.com",
+  "business_unit": "berry",
+  "cost_center": "dunno",
+  "accounts": {
+    "preview": "657375371926"
+  },
+  "repository": "onlyfyio/ecs-rds-nest-tf-template",
+  "branches_to_environments": {
+    "master": "production",
+    "preview": "preview",
+    "sandbox": "sandbox"
+  },
+  "xing_vpn_cidr": "172.16.0.0/12"
+}

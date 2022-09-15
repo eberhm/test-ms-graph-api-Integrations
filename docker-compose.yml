@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+
+  app:
+    profiles: [ "dev" ]
+    container_name: marketplace-msteams-poc_app
+    build:
+      target: $TARGET
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        NODE_ENV: $NODE_ENV
+    tty: true
+    stdin_open: true
+    command: [ yarn, "${CMD:-start:dev}" ]
+    ports:
+      - $PORT:$PORT
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ./src
+        target: /app/src
+      - type: bind
+        source: ./prisma
+        target: /app/prisma
+      - type: bind
+        source: ./package.json
+        target: /app/package.json
+      - type: bind
+        source: ./.env
+        target: /app/.env
+      - /app/node_modules
+      - yarn_cache:/yarn
+    depends_on:
+      - database
+  database:
+    profiles: [ "dev", "services" ]
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    ports:
+      - $DB_PORT:$DB_PORT
+    expose:
+      - $DB_PORT
+    volumes:
+      - database:/var/lib/mysql
+
+networks:
+  default:
+    external:
+      name: development-network
+volumes:
+  yarn_cache:
+  database:
+    driver: local

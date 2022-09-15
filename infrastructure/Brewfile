@@ -1,0 +1,8 @@
+brew "awscli"
+
+tap "versent/homebrew-taps"
+brew "saml2aws"
+
+brew "terragrunt@0.37.1"
+
+brew "tfenv"

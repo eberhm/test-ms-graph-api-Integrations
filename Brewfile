@@ -1,0 +1,3 @@
+brew "awscli"
+
+brew "docker"
